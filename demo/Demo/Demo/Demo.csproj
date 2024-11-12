@@ -11,7 +11,7 @@
 
     <ItemGroup>
       <Reference Include="DynamicConfiguration">
-        <HintPath>..\..\..\library\DynamicConfiguration\DynamicConfiguration\bin\Debug\net5.0\DynamicConfiguration.dll</HintPath>
+        <HintPath>DynamicConfiguration.dll</HintPath>
       </Reference>
     </ItemGroup>
 

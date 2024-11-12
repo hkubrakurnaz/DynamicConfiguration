@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DynamicConfiguration.Extensions;
+using DynamicConfiguration.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace Demo
@@ -31,7 +26,7 @@ namespace Demo
             
             services.AddConfigurationReader(new DynamicConfigurationSettings()
             {
-                DatabaseConnectionString = "mongodb://localhost:27017/configuratorDb",
+                DatabaseConnectionString = "mongodb://mongodb:27017/configuratorDb",
                 RefreshIntervalInMs = 1000,
                 ApplicationName = "test"
             });
@@ -43,9 +38,10 @@ namespace Demo
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Demo v1"));
             }
+            
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Demo v1"));
 
             app.UseHttpsRedirection();
 

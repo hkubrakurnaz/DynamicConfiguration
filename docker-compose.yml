@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: configurator_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: configuratorDb
+    command: >
+      bash -c 'mongod --bind_ip_all && \
+      mongo --eval "db = db.getSiblingDB('configuratorDb'); db.createCollection('configurations'); db.configurations.insertOne({ ID: 1, Name: 'ApplicationName', Type: 'String', Value: 'DemoApp', IsActive: true });"'
+
+  demoApp:
+    build:
+      context: ./demo/Demo
+      dockerfile: Dockerfile
+    image: demo-image
+    container_name: demoAppContainer
+    ports:
+      - "8080:80"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/configuratorDb
+
+volumes:
+  mongo-data:
