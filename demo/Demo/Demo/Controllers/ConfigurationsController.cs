@@ -13,7 +13,7 @@ namespace Demo.Controllers
     {
         private readonly IConfigurationReader _configurationReader;
 
-        public WeatherForecastController( IConfigurationReader configurationReader)
+        public ConfigurationsController(IConfigurationReader configurationReader)
         {
             _configurationReader = configurationReader;
         }
