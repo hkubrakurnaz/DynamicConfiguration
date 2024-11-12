@@ -28,6 +28,13 @@ namespace Demo
         {
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo", Version = "v1" }); });
+            
+            services.AddConfigurationReader(new DynamicConfigurationSettings()
+            {
+                DatabaseConnectionString = "mongodb://localhost:27017/configuratorDb",
+                RefreshIntervalInMs = 1000,
+                ApplicationName = "test"
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
