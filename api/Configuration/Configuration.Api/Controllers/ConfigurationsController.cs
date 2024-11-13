@@ -76,7 +76,7 @@ namespace Configuration.Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> PutPurchaseOrder([FromRoute] string id, [FromBody] PutConfigurationRequest request)
+        public async Task<IActionResult> Put([FromRoute] string id, [FromBody] PutConfigurationRequest request)
         {
             if (string.IsNullOrEmpty(id))
             {

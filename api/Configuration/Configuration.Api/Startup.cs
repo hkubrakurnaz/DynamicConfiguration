@@ -2,12 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Configuration.Api.Middleware;
-using Configuration.Application.Configurations.Validators;
 using Configuration.Domain.Db;
 using Configuration.Infrastructure.Db;
 using Configuration.Infrastructure.Db.Repositories;
-using FluentValidation;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,7 +28,7 @@ namespace Configuration.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
+                
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Configuration.Api", Version = "v1" });

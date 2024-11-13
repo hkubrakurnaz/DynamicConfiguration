@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using DynamicConfiguration.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,11 +18,11 @@ namespace Demo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery] string key)
+        public IActionResult Get([FromQuery] string key, [FromQuery] string type)
         {
             try
             {
-                var result = _configurationReader.GetValue<object>(key);
+                var result = GetTypes(key, type);
                 return Ok(new
                 {
                     Result = result,
@@ -30,6 +32,24 @@ namespace Demo.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Post()
+        {
+            await _configurationReader.RefreshCache();
+            return Ok();
+        }
+        
+        private object GetTypes(string key, string type)
+        {
+            return type.ToLower() switch
+            {
+                "string" => _configurationReader.GetValue<string>(key),
+                "integer" => _configurationReader.GetValue<int>(key),
+                "boolean" => _configurationReader.GetValue<bool>(key),
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
         }
     }
 }

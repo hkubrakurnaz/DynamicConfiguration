@@ -8,11 +8,9 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+      - ./scripts/init.js:/docker-entrypoint-initdb.d/init.js:ro
     environment:
-      MONGO_INITDB_DATABASE: configuratorDb
-    command: >
-      bash -c 'mongod --bind_ip_all && \
-      mongo --eval "db = db.getSiblingDB('configuratorDb'); db.createCollection('configurations'); db.configurations.insertOne({ ID: 1, Name: 'ApplicationName', Type: 'String', Value: 'DemoApp', IsActive: true });"'
+      MONGO_INITDB_DATABASE: configurationDb
     healthcheck:
       test: ["CMD-SHELL", "echo 'db.runCommand({ ping: 1 })' | mongosh localhost:27017"]
       interval: 30s
@@ -31,7 +29,7 @@ services:
       mongodb:
         condition: service_healthy
     environment:
-      - MONGO_URL=mongodb://mongodb:27017/configuratorDb
+      - MONGO_URL=mongodb://mongodb:27017/configurationDb
 
   api:
     container_name: configurationApi
