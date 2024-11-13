@@ -27,7 +27,7 @@ namespace Demo
             services.AddConfigurationReader(new DynamicConfigurationSettings()
             {
                 DatabaseConnectionString = "mongodb://mongodb:27017/configuratorDb",
-                RefreshIntervalInMs = 1000,
+                RefreshIntervalInMs = 1000 * 60,
                 ApplicationName = "test"
             });
         }

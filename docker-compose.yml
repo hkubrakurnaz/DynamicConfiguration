@@ -13,7 +13,12 @@ services:
     command: >
       bash -c 'mongod --bind_ip_all && \
       mongo --eval "db = db.getSiblingDB('configuratorDb'); db.createCollection('configurations'); db.configurations.insertOne({ ID: 1, Name: 'ApplicationName', Type: 'String', Value: 'DemoApp', IsActive: true });"'
-
+    healthcheck:
+      test: ["CMD-SHELL", "echo 'db.runCommand({ ping: 1 })' | mongosh localhost:27017"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      
   demoApp:
     build:
       context: ./demo/Demo
@@ -23,9 +28,21 @@ services:
     ports:
       - "8080:80"
     depends_on:
-      - mongodb
+      mongodb:
+        condition: service_healthy
     environment:
       - MONGO_URL=mongodb://mongodb:27017/configuratorDb
 
+  api:
+    container_name: configurationApi
+    build: 
+      context: ./api/Configuration
+      dockerfile: Dockerfile
+    ports:
+      - "8081:81"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+        
 volumes:
   mongo-data:

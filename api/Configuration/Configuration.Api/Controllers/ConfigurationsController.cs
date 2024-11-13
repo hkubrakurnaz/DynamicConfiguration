@@ -89,7 +89,8 @@ namespace Configuration.Api.Controllers
                 ApplicationName = request.ApplicationName,
                 Type = request.Type,
                 Value = request.Value,
-                Name = request.Name
+                Name = request.Name,
+                IsActive = request.IsActive
             };
 
             await _mediator.Send(createConfigurationRequest);
