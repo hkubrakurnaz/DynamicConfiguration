@@ -17,7 +17,7 @@ namespace Configuration.Application.Configurations.QueryHandlers
 
         public async Task<GetConfigurationsQueryResult> Handle(GetConfigurationsQuery request, CancellationToken cancellationToken)
         {
-            var dynamicConfigurations = await _configurationRepository.GetConfigurations(request.ApplicationName, request.Type);
+            var dynamicConfigurations = await _configurationRepository.GetConfigurations(request.ApplicationName, request.Name);
 
             return GetConfigurationsQueryResult.Map(dynamicConfigurations);
         }

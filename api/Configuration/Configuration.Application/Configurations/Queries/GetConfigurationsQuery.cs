@@ -7,7 +7,7 @@ namespace Configuration.Application.Configurations.Queries
 {
     public record GetConfigurationsQuery : IRequest<GetConfigurationsQueryResult>
     {
-        public string Type { get; init; }
+        public string Name { get; init; }
 
         public string ApplicationName { get; init; }
     }

@@ -6,7 +6,7 @@ namespace Configuration.Domain.Db
 {
     public interface IConfigurationRepository
     {
-        Task<List<DynamicConfiguration>> GetConfigurations(string applicationName, string type);
+        Task<List<DynamicConfiguration>> GetConfigurations(string applicationName, string name);
         
         Task<DynamicConfiguration> GetConfiguration(string id);
         

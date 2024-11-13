@@ -45,7 +45,7 @@ namespace Configuration.Api.Controllers
             var getConfigurationsQuery = new GetConfigurationsQuery
             {
                 ApplicationName = request.ApplicationName,
-                Type = request.Type
+                Name = request.Name
             };
 
             var getConfigurationQueryResult = await _mediator.Send(getConfigurationsQuery);

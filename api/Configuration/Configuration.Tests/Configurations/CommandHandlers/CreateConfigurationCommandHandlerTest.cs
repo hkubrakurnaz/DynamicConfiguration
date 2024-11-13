@@ -35,7 +35,7 @@ namespace Configuration.Tests.Configurations.CommandHandlers
             // Arrange
             var command = _fixture.Create<CreateConfigurationCommand>();
             var createdId = _fixture.Create<string>();
-            _configurationRepositoryMock.Setup(repo => repo.GetConfigurations(command.ApplicationName, command.Type))
+            _configurationRepositoryMock.Setup(repo => repo.GetConfigurations(command.ApplicationName, command.Name))
                 .ReturnsAsync(new List<DynamicConfiguration>());
             _configurationRepositoryMock.Setup(repo => repo.CreateConfiguration(It.IsAny<DynamicConfiguration>()))
                 .ReturnsAsync(createdId);
@@ -53,7 +53,7 @@ namespace Configuration.Tests.Configurations.CommandHandlers
             // Arrange
             var command = _fixture.Create<CreateConfigurationCommand>();
             var existingConfigurations = _fixture.CreateMany<DynamicConfiguration>(1).ToList();
-            _configurationRepositoryMock.Setup(repo => repo.GetConfigurations(command.ApplicationName, command.Type))
+            _configurationRepositoryMock.Setup(repo => repo.GetConfigurations(command.ApplicationName, command.Name))
                 .ReturnsAsync(existingConfigurations);
 
             // Act & Assert
@@ -65,7 +65,7 @@ namespace Configuration.Tests.Configurations.CommandHandlers
         {
             // Arrange
             var command = _fixture.Create<CreateConfigurationCommand>();
-            _configurationRepositoryMock.Setup(repo => repo.GetConfigurations(command.ApplicationName, command.Type))
+            _configurationRepositoryMock.Setup(repo => repo.GetConfigurations(command.ApplicationName, command.Name))
                 .ReturnsAsync(new List<DynamicConfiguration>());
 
             // Act

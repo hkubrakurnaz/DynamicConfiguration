@@ -36,7 +36,7 @@ namespace Configuration.Application.Configurations.CommandHandlers
 
         private async Task CheckConfigurationExist(CreateConfigurationCommand request)
         {
-            var dynamicConfigurations = await _configurationRepository.GetConfigurations(request.ApplicationName, request.Type);
+            var dynamicConfigurations = await _configurationRepository.GetConfigurations(request.ApplicationName, request.Name);
             if (dynamicConfigurations.Count != 0)
             {
                 throw new ConflictException("Configuration already exists");

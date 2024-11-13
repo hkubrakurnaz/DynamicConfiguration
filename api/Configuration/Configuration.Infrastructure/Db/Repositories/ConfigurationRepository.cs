@@ -16,7 +16,7 @@ namespace Configuration.Infrastructure.Db.Repositories
             _configurations = context.Configurations;
         }
         
-        public async Task<List<DynamicConfiguration>> GetConfigurations(string applicationName, string type)
+        public async Task<List<DynamicConfiguration>> GetConfigurations(string applicationName, string name)
         {
             var dynamicConfigurations = _configurations.AsQueryable().Where(x => x.IsActive);
 
@@ -25,9 +25,9 @@ namespace Configuration.Infrastructure.Db.Repositories
                 dynamicConfigurations = dynamicConfigurations.Where(x => x.ApplicationName == applicationName);
             }
 
-            if (!string.IsNullOrEmpty(type))
+            if (!string.IsNullOrEmpty(name))
             {
-                dynamicConfigurations = dynamicConfigurations.Where(x => x.Type == type);
+                dynamicConfigurations = dynamicConfigurations.Where(x => x.Name == name);
             }
 
             var configurations = await dynamicConfigurations.ToListAsync();

@@ -34,7 +34,7 @@ namespace Configuration.Tests.Configurations.QueryHandlers
             // Arrange
             var query = _fixture.Create<GetConfigurationsQuery>();
             var existingConfigurations = _fixture.CreateMany<DynamicConfiguration>().ToList();
-            _configurationRepositoryMock.Setup(repo => repo.GetConfigurations(query.ApplicationName, query.Type))
+            _configurationRepositoryMock.Setup(repo => repo.GetConfigurations(query.ApplicationName, query.Name))
                 .ReturnsAsync(existingConfigurations);
 
             // Act
@@ -51,7 +51,7 @@ namespace Configuration.Tests.Configurations.QueryHandlers
         {
             // Arrange
             var query = _fixture.Create<GetConfigurationsQuery>();
-            _configurationRepositoryMock.Setup(repo => repo.GetConfigurations(query.ApplicationName, query.Type))
+            _configurationRepositoryMock.Setup(repo => repo.GetConfigurations(query.ApplicationName, query.Name))
                 .ReturnsAsync(new List<DynamicConfiguration>());
 
             // Act
