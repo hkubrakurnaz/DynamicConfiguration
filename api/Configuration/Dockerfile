@@ -1,20 +1,18 @@
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine AS base
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 EXPOSE 81
 
 ENV ASPNETCORE_URLS=http://+:81
 
-RUN apk update
-
-RUN apk add --no-cache apache2-utils curl
 WORKDIR /app
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 
 COPY ["Configuration.Application/Configuration.Application.csproj", "Application/"]
 COPY ["Configuration.Infrastructure/Configuration.Infrastructure.csproj", "Infrastructure/"]
 COPY ["Configuration.Domain/Configuration.Domain.csproj", "Domain/"]
 COPY ["Configuration.Api/Configuration.Api.csproj", "Api/"]
+COPY ["Configuration.Tests/Configuration.Tests.csproj", "Tests/"]
 
 RUN pwd
 RUN dotnet restore "Api/Configuration.Api.csproj"

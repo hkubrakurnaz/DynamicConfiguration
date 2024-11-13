@@ -18,7 +18,7 @@ namespace Demo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery] string key, [FromQuery] string type)
+        public IActionResult Get([FromQuery] string key = "MaxItemCount", [FromQuery] string type = "integer")
         {
             try
             {
