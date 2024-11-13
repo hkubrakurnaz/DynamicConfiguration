@@ -12,7 +12,7 @@ namespace Demo
             {
                 builder.ClearProviders();
                 builder.AddConsole();
-                builder.SetMinimumLevel(LogLevel.Trace);
+                builder.SetMinimumLevel(LogLevel.Information);
             }).Build().Run();
         }
 

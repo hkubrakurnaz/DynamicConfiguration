@@ -17,7 +17,7 @@ namespace DynamicConfiguration.Data
 
         public async Task<List<Configuration>> GetConfigurations(string applicationName)
         {
-            return await _configurations.AsQueryable().Where(x => x.ApplicationName == applicationName).ToListAsync();
+            return await _configurations.AsQueryable().Where(x => x.IsActive && x.ApplicationName == applicationName).ToListAsync();
         }
     }
 }

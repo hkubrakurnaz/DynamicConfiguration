@@ -1,4 +1,5 @@
-﻿using DynamicConfiguration.Services;
+﻿using System.Collections.Generic;
+using DynamicConfiguration.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.Controllers
@@ -15,9 +16,20 @@ namespace Demo.Controllers
         }
 
         [HttpGet]
-        public string Get()
+        public IActionResult Get([FromQuery] string key)
         {
-            return _configurationReader.GetValue<string>("test2");
+            try
+            {
+                var result = _configurationReader.GetValue<object>(key);
+                return Ok(new
+                {
+                    Result = result,
+                });
+            }
+            catch (KeyNotFoundException e)
+            {
+                return NotFound();
+            }
         }
     }
 }

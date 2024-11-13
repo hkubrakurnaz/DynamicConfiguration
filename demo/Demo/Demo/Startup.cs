@@ -1,3 +1,4 @@
+using Demo.Settings;
 using DynamicConfiguration.Extensions;
 using DynamicConfiguration.Settings;
 using Microsoft.AspNetCore.Builder;
@@ -21,14 +22,17 @@ namespace Demo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var applicationSettings = Configuration.GetSection("ApplicationSettings").Get<ApplicationSettings>();
+
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo", Version = "v1" }); });
-            
+
+            // Library implementation
             services.AddConfigurationReader(new DynamicConfigurationSettings()
             {
-                DatabaseConnectionString = "mongodb://mongodb:27017/configuratorDb",
-                RefreshIntervalInMs = 1000 * 60,
-                ApplicationName = "test"
+                DatabaseConnectionString = Configuration.GetConnectionString("DefaultConnection"),
+                RefreshIntervalInMs = applicationSettings.RefreshIntervalInMs,
+                ApplicationName = applicationSettings.ApplicationName
             });
         }
 
@@ -39,7 +43,7 @@ namespace Demo
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Demo v1"));
 
